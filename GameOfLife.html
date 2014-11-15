@@ -13,7 +13,11 @@ function create_grid(){
     for (i = 0; i < n; i++) {
         row = [];
         for (j = 0; j < n; j++) {
-            row[j] = false;
+            if (Math.random() > 0.5) {
+                row[j] = true;
+            } else {
+                row[j] = false;
+            }
         }
         grid[i] = row;
     }
@@ -132,22 +136,12 @@ function display(grid){
 
 
 a = create_grid();
-a[20][20] = true;
-a[21][20] = true;
-a[22][20] = true;
+
 init(a);
 
 
 window.setInterval(function(){
-  transit(a);
-  transit(a);
-  transit(a);
-  transit(a);
-  transit(a);
-  transit(a);
-  transit(a);
-  transit(a);
-  transit(a);
+
   a = display(a);
 }, 5);
 </script>
