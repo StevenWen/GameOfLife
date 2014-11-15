@@ -6,7 +6,7 @@
 
 
 <script type="text/javascript">
-n = 50;
+n = 100;
 
 function create_grid(){
     grid = [];
