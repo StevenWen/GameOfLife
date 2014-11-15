@@ -1,0 +1,153 @@
+
+<body>
+    
+</body>
+
+
+
+<script type="text/javascript">
+n = 100;
+
+function create_grid(){
+    grid = [];
+    for (i = 0; i < n; i++) {
+        row = [];
+        for (j = 0; j < n; j++) {
+            row[j] = false;
+        }
+        grid[i] = row;
+    }
+    return grid;
+}
+
+function transit(grid) {
+    new_grid = [];
+    for (i = 0; i < n; i++) {
+        row = [];
+        for (j = 0; j < n; j++) {
+            row[j] = set(grid, i, j);
+        }
+        new_grid[i] = row;
+    }
+    return new_grid;
+}
+
+function set(grid, x, y) {
+    count = count_live(grid, x, y);
+    if (grid[x][y]) {
+        count = count_live(grid, x, y);
+        if (count < 2) {
+            return false;
+        }
+        else if (count > 3) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    } else {
+        if (count_live(grid, x, y) == 3) {
+            return true;
+        }
+    }
+    return false;
+}
+
+function count_live(grid, x, y) {
+    count = 0;
+    if (x >= 1 && grid[x - 1][y]) {
+        count++;
+    }
+    if (x >= 1 && y >= 1 && grid[x - 1][y - 1]) {
+        count++;
+    }
+    if (x >= 1 && y <= n - 2  && grid[x - 1][y + 1]) {
+        count++;
+    }
+    if (y >= 1 && grid[x][y - 1]) {
+        count++;
+    }
+    if (y <= n - 2 && grid[x][y + 1]) {
+        count++;
+    }
+    if (x <= n - 2 && grid[x + 1][y]) {
+        count++;
+    }
+    if (x <= n - 2 && y >= 1 && grid[x + 1][y - 1]) {
+        count++;
+    }
+    if (x <= n - 2 && y <= n - 2  && grid[x + 1][y + 1]) {
+        count++;
+    }
+    return count;
+}
+
+function init(grid){
+    var body = document.body,
+    tbl = document.createElement('table');
+    tbl.style.width='800px';
+    tbl.style.height='800px';
+    tbl.style.border = "0px";
+    
+    for(var i = 0; i < n; i++){
+        var tr = tbl.insertRow();
+        for(var j = 0; j < n; j++){
+        	var td = tr.insertCell();
+            td.id = "r" + i + "c" + j;
+            td.style.border = "0px";
+            if (grid[i][j]) {
+                td.style.background = "blue";
+            }
+            
+            //td.appendChild(document.createTextNode('Q'))
+
+        }
+    }
+    body.appendChild(tbl);
+}
+
+
+function display(grid){
+    new_grid = [];
+    for(var i = 0; i < n; i++){
+        row = [];
+        for(var j = 0; j < n; j++){
+            
+            var td = document.getElementById("r" + i + "c" + j);
+            row[j] = set(grid, i, j);
+            if (grid[i][j]) {
+                td.style.background = "blue";
+            }
+            else {
+                td.style.background = "white";
+            }
+            
+            //td.appendChild(document.createTextNode('Q'))
+
+        }
+        new_grid[i] = row;
+    }
+    return new_grid;
+}
+
+
+a = create_grid();
+a[20][20] = true;
+a[21][20] = true;
+a[22][20] = true;
+init(a);
+
+
+window.setInterval(function(){
+  transit(a);
+  transit(a);
+  transit(a);
+  transit(a);
+  transit(a);
+  transit(a);
+  transit(a);
+  transit(a);
+  transit(a);
+  a = display(a);
+}, 5);
+</script>
