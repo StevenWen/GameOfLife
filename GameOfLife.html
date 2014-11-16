@@ -1,12 +1,17 @@
 
 <body>
-    
+   
+
+<canvas id="myCanvas" width="500" height="500" style="border:1px solid #c3c3c3;">
+Your browser does not support the HTML5 canvas tag.
+</canvas>
+
 </body>
 
 
 
 <script type="text/javascript">
-n = 50;
+n = 100;
 
 function create_grid(){
     grid = [];
@@ -24,12 +29,18 @@ function create_grid(){
     return grid;
 }
 
-function transit(grid) {
+function transit(grid, ctx) {
+    ctx.clearRect(0, 0, 500, 500);
     new_grid = [];
+    ctx.fillStyle = "#FF0000";
     for (i = 0; i < n; i++) {
         row = [];
         for (j = 0; j < n; j++) {
             row[j] = set(grid, i, j);
+            if (row[j]) {
+                ctx.fillRect((i * 5) , (j * 5), 5, 5);
+            }
+            
         }
         new_grid[i] = row;
     }
@@ -85,7 +96,7 @@ function count_live(grid, x, y) {
     }
     return count;
 }
-
+/*
 function init(grid){
     var body = document.body,
     tbl = document.createElement('table');
@@ -134,14 +145,19 @@ function display(grid){
     return new_grid;
 }
 
+*/
+
+
+
 
 a = create_grid();
 
-init(a);
 
+var c = document.getElementById("myCanvas");
+var ctx = c.getContext("2d");
 
 window.setInterval(function(){
 
-  a = display(a);
+  a = transit(a, ctx);
 }, 5);
 </script>
